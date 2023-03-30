@@ -1,1 +1,1 @@
-# AWS-Academy--Clapstone-Project
+# AWS-Academy--LAB15-Capstone-Project
