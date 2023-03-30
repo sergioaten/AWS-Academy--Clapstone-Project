@@ -148,4 +148,3 @@ resource "aws_autoscaling_policy" "asg_policy" {
         target_value = 25
     }
 }
-
