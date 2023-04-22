@@ -55,9 +55,9 @@ resource "aws_db_instance" "mysql_db" {
 
 resource "aws_ssm_parameter" "db_parameters" {
     count = length(local.ssm_ps)
-    name  = local.ssm_ps[count.index + 1].name
+    name  = local.ssm_ps[count.index].name
     type  = "String"
-    value = local.ssm_ps[count.index + 1].value_dbinstance
+    value = local.ssm_ps[count.index].value_dbinstance
 }
 
 resource "aws_security_group_rule" "ssh" {
