@@ -51,6 +51,19 @@ data "aws_instance" "bastion_host" {
         name   = "tag:Name"
         values = ["Bastion"]
     }
+    
+    filter {
+        name    = "instance-state-name"
+        values   = ["running"]
+    }
+}
+
+resource "time_sleep" "sixty_seconds" {
+    create_duration = "60s"
+
+    depends_on = [
+        aws_autoscaling_group.asg
+    ]
 }
 
 data "aws_instances" "client_host" {
@@ -59,7 +72,7 @@ data "aws_instances" "client_host" {
         values = ["ExampleAPP"]
     }
     depends_on = [
-        aws_db_instance.mysql_db
+        time_sleep.sixty_seconds
     ]
 }
 
