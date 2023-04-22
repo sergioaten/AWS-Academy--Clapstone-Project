@@ -149,3 +149,7 @@ resource "aws_autoscaling_group" "asg" {
 #         target_value = 25
 #     }
 # }
+
+output "public_dns_lb" {
+    value = aws_lb.lb.dns_name
+}
