@@ -123,11 +123,12 @@ resource "aws_autoscaling_group" "asg" {
     name                        = "asg"
     desired_capacity            = 2
     min_size                    = 2
-    max_size                    = 6
+    max_size                    = 4
     vpc_zone_identifier         = data.aws_subnets.private_subnet.ids
     health_check_grace_period   = 90
     health_check_type           = "ELB"
     target_group_arns           = [aws_lb_target_group.lb_tg.arn]
+    wait_for_capacity_timeout   = 0
 
     launch_template {
         id      = data.aws_launch_template.lt.id
@@ -135,16 +136,16 @@ resource "aws_autoscaling_group" "asg" {
     }
 }
 
-resource "aws_autoscaling_policy" "asg_policy" {
-    name                    = format("%s-policy",aws_autoscaling_group.asg.name)
-    policy_type             = "TargetTrackingScaling"
-    cooldown                = 20
-    autoscaling_group_name  = aws_autoscaling_group.asg.name
+# resource "aws_autoscaling_policy" "asg_policy" {
+#     name                    = format("%s-policy",aws_autoscaling_group.asg.name)
+#     policy_type             = "TargetTrackingScaling"
+#     cooldown                = 20
+#     autoscaling_group_name  = aws_autoscaling_group.asg.name
 
-    target_tracking_configuration {
-        predefined_metric_specification {
-            predefined_metric_type = "ASGAverageCPUUtilization"
-        }
-        target_value = 25
-    }
-}
+#     target_tracking_configuration {
+#         predefined_metric_specification {
+#             predefined_metric_type = "ASGAverageCPUUtilization"
+#         }
+#         target_value = 25
+#     }
+# }
